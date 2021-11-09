@@ -147,7 +147,7 @@
     <div class="col-md-12">
       <?php if (isset($transaksi[0]['id_order']) == null) : ?>
         <div class="mt-5 text-center">
-          <form id="payment-form" method="post" action="<?= site_url() ?>/midtrans/snap/finish">
+          <form id="payment-form" method="post" action="<?= site_url() ?>midtrans/snap/finish">
             <input type="hidden" name="result_type" id="result-type" value="">
             <input type="hidden" name="result_data" id="result-data" value="">
           </form>

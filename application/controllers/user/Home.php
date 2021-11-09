@@ -53,7 +53,6 @@ class Home extends CI_Controller
 		$this->load->model('toko_online_model');
 
 		$this->load->library('session');
-
 	}
 
 
@@ -79,8 +78,6 @@ class Home extends CI_Controller
 		// $this->load->view('user/dashboard1', $data);
 
 		echo "Jancuk";
-
-
 	}
 
 
@@ -100,7 +97,6 @@ class Home extends CI_Controller
 		//  print_r($this->db->last_query());
 
 		echo json_encode($this->toko_online_model->get_cek_pesan($idk_psn));
-
 	}
 
 
@@ -142,7 +138,6 @@ class Home extends CI_Controller
 		if (empty($fix)) {
 
 			$fix = 0;
-
 		}
 
 		if (substr(@$fix[$id], 4, 6) == date('ymd')) {
@@ -152,15 +147,12 @@ class Home extends CI_Controller
 			$angka_p = str_pad($angka, 3, "0", STR_PAD_LEFT);
 
 			$tgl_angk = substr($fix[$id], 4, 7) . $angka_p;
-
 		} else {
 
 			$tgl_angk = date('ymd') . '_001';
-
 		}
 
 		return $kode_jadi = $kode . '_' . $tgl_angk;
-
 	}
 
 
@@ -174,17 +166,14 @@ class Home extends CI_Controller
 		if (!empty($idk_psn)) {
 
 			$id_kpesan = $this->session->userdata('id_kpesan');
-
 		} else {
 
 			if ($this->session->kode_member == "") {
 
 				$id_kpesan = $this->id_oto('IKP', 'tk_pesan', 'id_kpesan');
-
 			} else {
 
 				$id_kpesan = $this->session->kode_member;
-
 			}
 
 
@@ -196,7 +185,6 @@ class Home extends CI_Controller
 				$data_kpesan['id_kpesan'] = $id_kpesan;
 
 				$this->toko_online_model->add('tk_pesan', $data_kpesan);
-
 			} else {
 
 				$data = array(
@@ -208,15 +196,12 @@ class Home extends CI_Controller
 
 
 				$update = $this->toko_online_model->update_table('tk_pesan', $data, array('id_kpesan' => $id_kpesan));
-
 			}
 
 
 
 			$this->session->set_userdata('id_kpesan', $id_kpesan);
-
 		}
-
 	}
 
 
@@ -225,41 +210,19 @@ class Home extends CI_Controller
 
 	{
 
-		//$this->cek_session();
-
-		// $id_session = $this->session->userdata('id_kpesan');
-
-		// if ($id_session == null) {
-
-		// 	$acak = rand(10000, 100000);
-
-		// 	$this->session->set_userdata('id_kpesan', $acak);
-
-		// }
-
-
-
 		$get_slug_produk = $this->toko_online_model->get_slug_produk($slug_produk);
-
-		//print_r($this->db->last_query());
 
 		$data['title'] = "Situs Jual " . $get_slug_produk->nama_produk . " Terlengkap | blonjosam.com";
 
-
-
-		$data['detail_produk'] = $this->toko_online_model->get_table_where('produk', array('id_produk' => $get_slug_produk->id_produk));
+		$data['detail_produk'] = $this->toko_online_model->get_table_where_produk('produk', array('id_produk' => $get_slug_produk->id_produk));
 
 		$data['voucher'] = $this->toko_online_model->get_voucher('t_voucher', array('id_produk' => $get_slug_produk->id_produk));
-
-		///print_r($this->db->last_query());
 
 		$data['rating'] = $this->toko_online_model->get_rating('review_produk', array('id_produk' => $get_slug_produk->id_produk));
 
 		//$data['komentar'] = $this->toko_online_model->get_komentar('review_produk', array('id_produk' => $get_slug_produk->id_produk));
 
 		$jml = $this->toko_online_model->komentar();
-
-
 
 		$config['base_url'] = base_url('produk') . '/' . $slug_kategori . '/' . $slug_produk;
 
@@ -406,7 +369,6 @@ class Home extends CI_Controller
 		$data['content'] = 'user/produk_detail1';
 
 		$this->load->view('user/dashboard1', $data);
-
 	}
 
 
@@ -417,21 +379,11 @@ class Home extends CI_Controller
 
 		$this->load->library('pagination');
 
-
-
 		$data['content'] = 'user/produk1';
-
-
-
-		$config['per_page'] = 6; /*Jumlah data yang dipanggil perhalaman*/
-
-
 
 		$get_slug_kategori = $this->toko_online_model->get_slug_kategori($id_kategori_produk);
 
 		$data['title'] = "Situs Jual " . $get_slug_kategori->nama_kategori_produk . " Terlengkap | blonjosam.com";
-
-
 
 		$data['produk'] = $this->toko_online_model->get_table_where_produk('produk', array('kategori_produk' => $get_slug_kategori->id_kategori_produk));
 
@@ -439,10 +391,10 @@ class Home extends CI_Controller
 
 		$data['nav'] = 2;
 
+		$data['ktg'] = $this->toko_online_model->get_slug_kategori($id_kategori_produk);
+
 		$this->load->view('user/dashboard1', $data);
-
 	}
-
 
 
 	public function semua_produk($offset = 0)
@@ -476,7 +428,28 @@ class Home extends CI_Controller
 
 
 		$this->load->view('user/dashboard1', $data);
+	}
 
+	public function promo($offset = 0)
+
+	{
+
+		$this->load->library('pagination');
+
+		$data['content'] = 'user/promo';
+
+		$data['title'] = "Situs Jual Produk Promo Terlengkap | blonjosam.com";
+
+		$data['produk'] = $this->toko_online_model->get_table_promo();
+
+		// echo json_encode($data['produk']);
+		// die;
+
+		$data['kategori'] = $this->toko_online_model->get_table('kategori_produk');
+
+		$data['nav'] = 6;
+
+		$this->load->view('user/dashboard1', $data);
 	}
 
 
@@ -498,7 +471,7 @@ class Home extends CI_Controller
 		$config['per_page'] = 6; /*Jumlah data yang dipanggil perhalaman*/
 
 
-		$data['produk'] = $this->toko_online_model->get_table_search_produk('produk',$produk, $offset);
+		$data['produk'] = $this->toko_online_model->get_table_search_produk('produk', $produk, $offset);
 
 		//print_r($this->db->last_query());
 		$data['cari'] = $produk;
@@ -508,7 +481,6 @@ class Home extends CI_Controller
 
 
 		$this->load->view('user/dashboard1', $data);
-
 	}
 
 
@@ -524,7 +496,6 @@ class Home extends CI_Controller
 		$data['content'] = 'user/produk_detail1';
 
 		$this->load->view('user/dashboard1', $data);
-
 	}
 
 
@@ -538,7 +509,6 @@ class Home extends CI_Controller
 		$data['nav'] = 0;
 
 		$this->load->view('user/dashboard', $data);
-
 	}
 
 
@@ -568,11 +538,9 @@ class Home extends CI_Controller
 		if ($this->input->post('potongan') == "") {
 
 			$potongan = 0;
-
 		} else {
 
 			$potongan = $this->input->post('potongan');
-
 		}
 
 
@@ -610,7 +578,6 @@ class Home extends CI_Controller
 
 
 			$update = $this->toko_online_model->update_table('keranjang_belanja', $data, array('id_keranjang_belanja' => $ip, 'id_produk' => $id_produk));
-
 		} else {
 
 			$data = array(
@@ -638,7 +605,6 @@ class Home extends CI_Controller
 			);
 
 			$insert = $this->toko_online_model->insert_table('keranjang_belanja', $data);
-
 		}
 
 
@@ -686,19 +652,12 @@ class Home extends CI_Controller
 			redirect("/user/home/cart");
 
 			$this->session->set_flashdata('message', 'Keranjang berhasil di update');
-
-				
-
 		} else {
 
 			redirect("/user/home/cart");
 
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Keranjang gagal di update</div>');
-
-				
-
 		}
-
 	}
 
 
@@ -722,12 +681,12 @@ class Home extends CI_Controller
 				location.reload();
 
 		</script>";
-
 	}
 
 
 
-	public function empty_keranjang_belanja(){
+	public function empty_keranjang_belanja()
+	{
 
 		$this->toko_online_model->empty_table('keranjang_belanja');
 
@@ -738,7 +697,6 @@ class Home extends CI_Controller
 				location.reload();
 
 		</script>";
-
 	}
 
 
@@ -755,14 +713,13 @@ class Home extends CI_Controller
 
 		$data['jumlah'] = $this->toko_online_model->get_jumlah('keranjang_belanja', array('id_keranjang_belanja' => $this->session->userdata('id_kpesan')), 'jumlah_produk', 'berat_total');
 
-		$data['cart'] = $this->toko_online_model->get_keranjang_belanja(array('keranjang_belanja.id_keranjang_belanja' => $this->session->userdata('id_kpesan')));
+		$data['cart'] = $this->toko_online_model->get_cart(array('keranjang_belanja.id_keranjang_belanja' => $this->session->userdata('id_kpesan')));
 
 		$data['content'] = 'user/cart1';
 
 		$data['nav'] = 0;
 
 		$this->load->view('user/dashboard1', $data);
-
 	}
 
 
@@ -788,7 +745,6 @@ class Home extends CI_Controller
 		$data['nav'] = 5;
 
 		$this->load->view('user/dashboard1', $data);
-
 	}
 
 
@@ -808,7 +764,6 @@ class Home extends CI_Controller
 		$data['nav'] = 0;
 
 		$this->load->view('user/dashboard1', $data);
-
 	}
 
 
@@ -830,7 +785,6 @@ class Home extends CI_Controller
 		$data['nav'] = 3;
 
 		$this->load->view('user/dashboard1', $data);
-
 	}
 
 
@@ -863,12 +817,11 @@ class Home extends CI_Controller
 
 					</div>'
 
-				);
+			);
 
 			$data['content'] = 'user/cart1';
 
 			$this->load->view('user/dashboard1', $data);
-
 		} else {
 
 			$penjual = $this->toko_online_model->get_penjual_cart(array('keranjang_belanja.id_keranjang_belanja' => $this->session->userdata('id_kpesan')));
@@ -880,10 +833,9 @@ class Home extends CI_Controller
 				$data_penjual[$angka] = $this->toko_online_model->get_table_where('user', array('id_user' => $p['id_user']));
 
 				$angka++;
-
 			}
 
-			
+
 
 			// $data_penjual = array();
 
@@ -891,44 +843,43 @@ class Home extends CI_Controller
 
 			// foreach ($data['cart'] as $cart) {
 
-				// 	$data_penjual[$angka] = $this->toko_online_model->get_penjual(array('produk.id_produk' => $cart['id_produk']));
+			// 	$data_penjual[$angka] = $this->toko_online_model->get_penjual(array('produk.id_produk' => $cart['id_produk']));
 
-				// 	// print_r($data_penjual[$angka]);
+			// 	// print_r($data_penjual[$angka]);
 
-				// 	// echo "<br>";
+			// 	// echo "<br>";
 
-				// 	$angka++;
+			// 	$angka++;
 
-				// }
+			// }
 
-				// foreach ($data_penjual as $penjual) {
+			// foreach ($data_penjual as $penjual) {
 
-					// 	if
+			// 	if
 
-					// }
+			// }
 
-					
 
-					$data['penjual'] = $data_penjual;
 
-					if ($this->session->userdata('nama_member') != "") {
+			$data['penjual'] = $data_penjual;
 
-						$data['content'] = 'user/checkout_member';
+			if ($this->session->userdata('nama_member') != "") {
 
-					} else {
+				$data['content'] = 'user/checkout_member';
+				$id_member = $this->session->userdata('id_member');
 
-						$data['content'] = 'user/checkout1';
+				$data['member'] = $this->toko_online_model->ajax_get_alamat_profil($id_member);
+			} else {
 
-					}
+				$data['content'] = 'user/checkout1';
+			}
 
-					
 
-					$data['nav'] = 2;
 
-					$this->load->view('user/dashboard1', $data);
+			$data['nav'] = 2;
 
+			$this->load->view('user/dashboard1', $data);
 		}
-
 	}
 
 
@@ -984,13 +935,10 @@ class Home extends CI_Controller
 		if ($err) {
 
 			return $err;
-
 		} else {
 
 			return $response;
-
 		}
-
 	}
 
 
@@ -1056,13 +1004,10 @@ class Home extends CI_Controller
 		if ($err) {
 
 			return  $err;
-
 		} else {
 
 			return $response;
-
 		}
-
 	}
 
 
@@ -1080,7 +1025,6 @@ class Home extends CI_Controller
 		$data = json_decode($provinsi, true);
 
 		echo json_encode($data['rajaongkir']['results']);
-
 	}
 
 
@@ -1098,19 +1042,14 @@ class Home extends CI_Controller
 				$data = json_decode($kota, true);
 
 				echo json_encode($data['rajaongkir']['results']);
-
 			} else {
 
 				show_404();
-
 			}
-
 		} else {
 
 			show_404();
-
 		}
-
 	}
 
 
@@ -1128,7 +1067,6 @@ class Home extends CI_Controller
 
 
 		echo $province;
-
 	}
 
 
@@ -1148,7 +1086,6 @@ class Home extends CI_Controller
 
 
 		echo $kode_pos;
-
 	}
 
 
@@ -1164,7 +1101,6 @@ class Home extends CI_Controller
 		$data = json_decode($tarif, true);
 
 		echo json_encode($data['rajaongkir']['results']);
-
 	}
 
 
@@ -1174,7 +1110,6 @@ class Home extends CI_Controller
 	{ //load data cart
 
 		echo $this->show_stok($id);
-
 	}
 
 
@@ -1194,15 +1129,12 @@ class Home extends CI_Controller
 
 
 				$tengah = $tengah . '<option selected value="' . $i . '">' . $i . '</option>';
-
 			} else {
 
 
 
 				$tengah = $tengah . '<option value="' . $i . '">' . $i . '</option>';
-
 			}
-
 		}
 
 
@@ -1218,7 +1150,6 @@ class Home extends CI_Controller
 
 
 		return $output;
-
 	}
 
 
@@ -1230,7 +1161,6 @@ class Home extends CI_Controller
 		$data = $this->toko_online_model->ajax_get_id($id_produk);
 
 		echo json_encode($data);
-
 	}
 
 
@@ -1242,7 +1172,6 @@ class Home extends CI_Controller
 		$data = $this->toko_online_model->ajax_get_voucher($id_voucher);
 
 		echo json_encode($data);
-
 	}
 
 
@@ -1252,7 +1181,6 @@ class Home extends CI_Controller
 	{
 
 		$this->load->view('user/login');
-
 	}
 
 	public function logout()
@@ -1260,7 +1188,6 @@ class Home extends CI_Controller
 	{
 		$this->session->sess_destroy();
 		redirect("");
-
 	}
 
 
@@ -1304,7 +1231,6 @@ class Home extends CI_Controller
 			foreach ($sql as $key) {
 
 				$items = $key;
-
 			}
 
 			// print_r($items);
@@ -1316,13 +1242,10 @@ class Home extends CI_Controller
 			//$this->session->set_flashdata('data', '<div class="alert alert-success">Berhasil Masuk</div>');
 
 			redirect('');
-
 		} else {
 
 			echo "<script>alert('Gagal login: Cek username, password!');history.go(-1);</script>";
-
 		}
-
 	}
 
 
@@ -1360,7 +1283,6 @@ class Home extends CI_Controller
 			foreach ($sql as $key) {
 
 				$items = $key;
-
 			}
 
 			// print_r($items);
@@ -1370,13 +1292,10 @@ class Home extends CI_Controller
 
 
 			redirect('');
-
 		} else {
 
 			echo "<script>alert('Gagal login: Cek username, password!');history.go(-1);</script>";
-
 		}
-
 	}
 
 
@@ -1392,7 +1311,6 @@ class Home extends CI_Controller
 		$data['nav'] = 0;
 
 		$this->load->view('user/dashboard1', $data);
-
 	}
 
 
@@ -1406,7 +1324,6 @@ class Home extends CI_Controller
 		$data = $this->toko_online_model->get_by_id_profil($id);
 
 		echo json_encode($data);
-
 	}
 
 
@@ -1420,7 +1337,6 @@ class Home extends CI_Controller
 		$data = $this->toko_online_model->ajax_get_alamat_profil($id);
 
 		echo json_encode($data);
-
 	}
 
 
@@ -1434,7 +1350,6 @@ class Home extends CI_Controller
 		$data = $this->toko_online_model->ajax_get_alamat_profil_id($id, $id_alamat);
 
 		echo json_encode($data);
-
 	}
 
 
@@ -1488,7 +1403,6 @@ class Home extends CI_Controller
 			$nama_foto = $get_name['file_name'];
 
 			$data['foto_profil'] = $nama_foto;
-
 		}
 
 
@@ -1500,7 +1414,6 @@ class Home extends CI_Controller
 
 
 		echo json_encode(array('status' => TRUE));
-
 	}
 
 
@@ -1512,7 +1425,6 @@ class Home extends CI_Controller
 		$id_member = $this->session->userdata('id_member');
 
 		echo json_encode($this->toko_online_model->get_load_alamat($id_member));
-
 	}
 
 
@@ -1524,7 +1436,6 @@ class Home extends CI_Controller
 		$id_member = $this->session->userdata('id_member');
 
 		echo json_encode($this->toko_online_model->get_load_alamat($id_member));
-
 	}
 
 
@@ -1564,7 +1475,6 @@ class Home extends CI_Controller
 
 
 		echo json_encode(array('status' => TRUE));
-
 	}
 
 
@@ -1576,7 +1486,6 @@ class Home extends CI_Controller
 		$data = $this->toko_online_model->get_by_id_alamat($id);
 
 		echo json_encode($data);
-
 	}
 
 
@@ -1614,7 +1523,6 @@ class Home extends CI_Controller
 
 
 		echo json_encode(array('status' => TRUE));
-
 	}
 
 
@@ -1628,7 +1536,6 @@ class Home extends CI_Controller
 		$this->toko_online_model->delete_by_id($id);
 
 		echo json_encode(array("status" => TRUE));
-
 	}
 
 
@@ -1648,13 +1555,10 @@ class Home extends CI_Controller
 		if (count((array) $res) > 0) {
 
 			echo json_encode('true');
-
 		} else {
 
 			echo json_encode('false');
-
 		}
-
 	}
 
 
@@ -1680,7 +1584,6 @@ class Home extends CI_Controller
 
 
 		redirect('user/home/akun');
-
 	}
 
 
@@ -1694,11 +1597,9 @@ class Home extends CI_Controller
 		if ($kode == '0') {
 
 			$kodene = "";
-
 		} else {
 
 			$kodene = $kode;
-
 		}
 
 		//echo "kode".$kodene;
@@ -1710,7 +1611,6 @@ class Home extends CI_Controller
 		// print_r($this->db->last_query());
 
 		echo json_encode($this->toko_online_model->get_load_status_menunggu_pembayaran($kode_member, $kodene));
-
 	}
 
 
@@ -1724,11 +1624,9 @@ class Home extends CI_Controller
 		if ($kode == '0') {
 
 			$kodene = "";
-
 		} else {
 
 			$kodene = $kode;
-
 		}
 
 		//echo "kode".$kodene;
@@ -1740,7 +1638,6 @@ class Home extends CI_Controller
 		// print_r($this->db->last_query());
 
 		echo json_encode($this->toko_online_model->get_load_status_sedang_dikemas($kode_member, $kodene));
-
 	}
 
 
@@ -1754,11 +1651,9 @@ class Home extends CI_Controller
 		if ($kode == '0') {
 
 			$kodene = "";
-
 		} else {
 
 			$kodene = $kode;
-
 		}
 
 		//echo "kode".$kodene;
@@ -1770,7 +1665,6 @@ class Home extends CI_Controller
 		// print_r($this->db->last_query());
 
 		echo json_encode($this->toko_online_model->get_load_status_dalam_pengiriman($kode_member, $kodene));
-
 	}
 
 
@@ -1784,11 +1678,9 @@ class Home extends CI_Controller
 		if ($kode == '0') {
 
 			$kodene = "";
-
 		} else {
 
 			$kodene = $kode;
-
 		}
 
 		//echo "kode".$kodene;
@@ -1800,7 +1692,6 @@ class Home extends CI_Controller
 		// print_r($this->db->last_query());
 
 		echo json_encode($this->toko_online_model->get_load_status_sudah_sampai($kode_member, $kodene));
-
 	}
 
 
@@ -1822,7 +1713,6 @@ class Home extends CI_Controller
 		$data['nav'] = 4;
 
 		$this->load->view('user/dashboard1', $data);
-
 	}
 
 
@@ -1872,7 +1762,6 @@ class Home extends CI_Controller
 			if (empty($results[0]->costs[0])) {
 
 				echo "<script>alert(\"Layanan " . strtoupper($courier) . " tidak tersedia di kota anda, silahkan pilih jasa pengiriman yang lain.\");</script>";
-
 			}
 
 
@@ -1900,7 +1789,6 @@ class Home extends CI_Controller
 						if ($ti == 1) {
 
 							echo "<tr><td>&nbsp</td><td>Jenis Layanan</td><td>Deskripsi</td><td>Estimasi Pengiriman</td><td>Biaya</td></tr>";
-
 						}
 
 
@@ -1942,11 +1830,9 @@ class Home extends CI_Controller
 				endforeach;
 
 			endif;
-
 		} else {
 
 			echo "<script>alert(\"silahkan Lengakapi info kota anda\");</script>";
-
 		}
 
 		//end of parse json
@@ -1963,39 +1849,21 @@ class Home extends CI_Controller
 
 		$this->load->library('pagination');
 
-
+		$data['title'] = "Situs Jual Produk Terbaru Terlengkap | blonjosam.com";
 
 		$data['content'] = 'user/produk_terbaru';
 
-
 		$data['nav'] = 2;
-
-
-
-
 
 		$config['per_page'] = 6; /*Jumlah data yang dipanggil perhalaman*/
 
-
-
-
-
-
-
 		// $data['produk'] = $this->toko_online_model->get_table_where('produk', array('kategori_produk' => $id_kategori_produk));
 
-		$data['produk'] = $this->toko_online_model->get_table_limit('produk', 'id_produk', 'DESC', '30');
+		$data['produk'] = $this->toko_online_model->get_table_produk_ter('produk', 'id_produk', 'DESC', '30');
 
 		$data['kategori'] = $this->toko_online_model->get_table('kategori_produk');
 
-
-
-
-
-
-
 		$this->load->view('user/dashboard1', $data);
-
 	}
 
 
@@ -2006,38 +1874,21 @@ class Home extends CI_Controller
 
 		$this->load->library('pagination');
 
-
+		$data['title'] = "Situs Jual Produk Teraris Terlengkap | blonjosam.com";
 
 		$data['content'] = 'user/produk_terlaris';
 
-
 		$data['nav'] = 2;
-
-
-
 
 		$config['per_page'] = 6; /*Jumlah data yang dipanggil perhalaman*/
 
-
-
-
-
-
-
 		// $data['produk'] = $this->toko_online_model->get_table_where('produk', array('kategori_produk' => $id_kategori_produk));
 
-		$data['produk'] = $this->toko_online_model->get_table_limit('produk', 'jumlah_terjual', 'DESC', '30');
+		$data['produk'] = $this->toko_online_model->get_table_produk_ter('produk', 'jumlah_terjual', 'DESC', '30');
 
 		$data['kategori'] = $this->toko_online_model->get_table('kategori_produk');
 
-
-
-
-
-
-
 		$this->load->view('user/dashboard1', $data);
-
 	}
 
 
@@ -2048,39 +1899,21 @@ class Home extends CI_Controller
 
 		$this->load->library('pagination');
 
-
-
 		$data['content'] = 'user/produk_terlaris';
 
+		$data['title'] = "Situs Jual Produk Termurah Terlengkap | blonjosam.com";
 
 		$data['nav'] = 2;
 
-
-
-
 		$config['per_page'] = 6; /*Jumlah data yang dipanggil perhalaman*/
-
-
-
-
-
-
 
 		// $data['produk'] = $this->toko_online_model->get_table_where('produk', array('kategori_produk' => $id_kategori_produk));
 
-		$data['produk'] = $this->toko_online_model->get_table_limit('produk', 'harga', 'ASC', '30');
-
+		$data['produk'] = $this->toko_online_model->get_table_produk_ter('produk', 'harga', 'ASC', '30');
+		// echo json_encode($data['produk']);
+		// die;
 		$data['kategori'] = $this->toko_online_model->get_table('kategori_produk');
 
-
-
-
-
-
-
 		$this->load->view('user/dashboard1', $data);
-
 	}
-
 }
-

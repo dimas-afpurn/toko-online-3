@@ -170,9 +170,26 @@ class Toko_online_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->where($where);
-        // $this->db->from('produk');
+        $this->db->from($table);
+        $this->db->join('promo', 'produk.id_produk=promo.id_produk_promo', 'left outer');
         $this->db->join('kategori_produk', 'produk.kategori_produk=kategori_produk.id_kategori_produk', 'left outer');
-        $query = $this->db->get($table);
+        $query = $this->db->get();
+
+        // if ($this->db->_error_message()) header('Location: ../');
+
+        return $query->result_array();
+    }
+
+    function get_table_promo()
+    {
+        $this->db->select('*');
+        $this->db->from('promo');
+        $this->db->join('produk', 'promo.id_produk_promo=produk.id_produk', 'left outer');
+        $this->db->join('kategori_produk', 'produk.kategori_produk=kategori_produk.id_kategori_produk', 'left outer');
+        // $today = date('Y-m-d');
+        // $this->db->where('promo.tgl_mulai <= ', $today);
+        // $this->db->where('promo.tgl_selesai >= ', $today);
+        $query = $this->db->get();
 
         // if ($this->db->_error_message()) header('Location: ../');
 
@@ -184,6 +201,7 @@ class Toko_online_model extends CI_Model
         $this->db->select('*');
         $this->db->like('produk.nama_produk', $produk);
         $this->db->order_by('id_produk', 'DESC');
+        $this->db->join('promo', 'produk.id_produk=promo.id_produk_promo', 'left outer');
         $this->db->join('kategori_produk', 'produk.kategori_produk=kategori_produk.id_kategori_produk', 'left outer');
         $query = $this->db->get($table);
 
@@ -396,6 +414,21 @@ class Toko_online_model extends CI_Model
         return $query->result_array();
     }
 
+    function get_cart($where)
+    {
+        $this->db->select('*');
+        $this->db->where($where);
+        $this->db->from('keranjang_belanja');
+        $this->db->join('produk', 'produk.id_produk=keranjang_belanja.id_produk', 'left outer');
+        $this->db->join('promo', 'produk.id_produk=promo.id_produk_promo', 'left outer');
+        // $this->db->join('kategori_produk', 'produk.kategori_produk=kategori_produk.id_kategori_produk', 'left outer');
+        $query = $this->db->get();
+
+        // if ($this->db->_error_message()) header('Location: ../');
+
+        return $query->result_array();
+    }
+
     public function get_total($from, $where, $sum1, $sum2)
     {
         $this->db->select("SUM(" . $sum1 . ") as total_jumlah, SUM(" . $sum2 . ") as total_harga");
@@ -580,7 +613,6 @@ class Toko_online_model extends CI_Model
     function empty_table($table)
     {
         return $this->db->empty_table($table);
-
     }
 
 
@@ -756,6 +788,8 @@ class Toko_online_model extends CI_Model
     public function ajax_get_id($id)
     {
         $this->db->from('produk');
+        $this->db->join('promo', 'produk.id_produk=promo.id_produk_promo', 'left outer');
+
         $this->db->where('id_produk', $id);
         $query = $this->db->get();
         return $query->row();
@@ -1066,6 +1100,17 @@ class Toko_online_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from($table);
+        $this->db->order_by($order_by, $order);
+        $this->db->limit($limit);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    function get_table_produk_ter($table, $order_by, $order, $limit)
+    {
+        $this->db->select('*');
+        $this->db->from($table);
+        $this->db->join('promo', 'produk.id_produk=promo.id_produk_promo', 'left outer');
+        $this->db->join('kategori_produk', 'produk.kategori_produk=kategori_produk.id_kategori_produk', 'left outer');
         $this->db->order_by($order_by, $order);
         $this->db->limit($limit);
         $query = $this->db->get();

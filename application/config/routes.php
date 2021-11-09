@@ -67,6 +67,7 @@ $route['user/account/profile'] = 'user/home/akun';
 $route['produk/produk-terbaru'] = 'user/home/produk_terbaru';
 $route['produk/produk-terlaris'] = 'user/home/produk_terlaris';
 $route['produk/produk-termurah'] = 'user/home/produk_termurah';
+$route['promo'] = 'user/home/promo';
 $route['logout'] = 'user/home/logout';
 $route['rajaongkir'] = 'user/rajaongkir';
 
@@ -75,7 +76,6 @@ $route['user/purchase/order/(:any)'] = 'user/home/detail_order/$1';
 $route['produk/(:any)/(:any)/(:any)'] = 'user/home/detail2/$1/$2/$3';
 $route['(:any)'] = 'user/home/produk/$1';
 $route['(:any)/(:any)'] = 'user/home/detail/$1/$2';
-
 
 
 $route['default_controller'] = 'home';

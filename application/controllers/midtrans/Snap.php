@@ -32,7 +32,7 @@ class Snap extends CI_Controller
 		$this->load->library('midtrans/midtrans');
 		$this->midtrans->config($params);
 		// $this->load->helper('url');
-		$this->load->model('toko_online_model');
+		$this->load->model('Toko_online_model');
 		$this->load->helper(array('form', 'url'));
 	}
 
@@ -45,7 +45,7 @@ class Snap extends CI_Controller
 	{
 		$id_order = $this->input->post('id');
 		//echo '$id_order'.$id_order;
-		$order = $this->toko_online_model->get_table_where('order', array('id_order' => $id_order));
+		$order = $this->Toko_online_model->get_table_where('order', array('id_order' => $id_order));
 		//print_r($this->db->last_query());
 		$total = $order[0]['total_order'];
 		$ongkir = $order[0]['ongkir'];
@@ -137,8 +137,11 @@ class Snap extends CI_Controller
 	{
 		$result = json_decode($this->input->post('result_data'), true);
 
+		// echo json_encode($result);
+		// die;
+
 		if ($result['payment_type'] == "bank_transfer") {
-			$data = array(
+			$data_transaksi = array(
 				'id_order' 		=> $result['order_id'],
 				'status_code'		=> $result['status_code'],
 				'gross_amount'		=> $result['gross_amount'],
@@ -147,7 +150,7 @@ class Snap extends CI_Controller
 				'pdf_url'		=> $result['pdf_url']
 			);
 		} elseif ($result['payment_type'] == "gopay") {
-			$data = array(
+			$data_transaksi = array(
 				'id_order' 		=> $result['order_id'],
 				'status_code'		=> $result['status_code'],
 				'gross_amount'		=> $result['gross_amount'],
@@ -156,7 +159,10 @@ class Snap extends CI_Controller
 			);
 		}
 
-		$simpan = $this->db->insert('transaksi_midtrans', $data);
+		// $simpan = $this->db->insert('transaksi_midtrans', $data);
+		$simpan = $this->Toko_online_model->insert_table('transaksi_midtrans', $data_transaksi);
+		// $this->db->set($data);
+		// $simpan = $this->db->insert($this->db->dbprefix . 'transaksi_midtrans');
 
 		if ($simpan) {
 			redirect(base_url('user/order/search_order/'));

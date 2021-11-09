@@ -76,7 +76,7 @@
                             <div class="form-group col-md-12">
                                 <label class="ml-2">Paket Pengiriman</label>
                                 <select name="paket_kirim" id="paket_kirim" class="form-control" disabled oninvalid="this.setCustomValidity('layanan pengiriman belum dipilih')" oninput="setCustomValidity('')">
-                                    <option value="" disabled selected hidden>abaikan saja paket</option>
+                                    <option value="JNE - REG" ongkir="10000" lama_kirim="2">JNE - REG</option>
                                 </select>
                             </div>
                         </div>

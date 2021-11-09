@@ -13,6 +13,7 @@
 			<li><a href="<?= base_url('user/Home') ?>">Home</a></li>
 
 			<li class="active">Detail Produk</li>
+			<li class="active"><?= $detail_produk[0]['nama_produk'] ?></li>
 
 		</ol>
 
@@ -115,23 +116,37 @@
 							<li>
 
 								<h4>Harga per Satuan</h4>
-									<!-- <?php echo $this->session->userdata('id_kpesan'); ?></h4> -->
 
 							</li>
 
-							<li class="active">Rp. <span id="harga_jual"></span> </li>
+							<?php if (isset($detail_produk[0]['harga_promo'])) : ?>
 
-							<li>
+								<li class="active">Rp. <s><span id="harga_jual_old"></span></s> <span id="harga_jual"></span></li>
 
-								<h4>Subtotal </h4>
+								<li>
 
-							</li>
+									<h4>Subtotal </h4>
 
-							<li class="active">Rp. <span id="subtotal"></span> </li>
+								</li>
+
+								<li class="active">Rp. <span id="subtotal"></span> </li>
+
+							<?php else : ?>
+								<li class="active">Rp. <span id="harga_jual"></span> </li>
+
+								<li>
+
+									<h4>Subtotal </h4>
+
+								</li>
+
+								<li class="active">Rp. <span id="subtotal"></span> </li>
+
+							<?php endif; ?>
 
 							<form method="POST" action="<?= base_url() ?>user/Home/keranjang_belanja">
 
-							<!-- <form id="formAksi"> -->
+								<!-- <form id="formAksi"> -->
 
 								<input type="hidden" value="1" name="quantity">
 
@@ -252,11 +267,9 @@
 				if ($rating->jml_ulasan != "" && $rating->total_ulasan != 0) {
 
 					echo number_format($rating->total_ulasan / $rating->jml_ulasan, 0);
-
 				} else {
 
 					echo "0.0";
-
 				} ?><span>/5</span></h5>
 
 			<!-- <div id="stars-existing" class="starrr glyphicon-3x" data-rating='<?php echo number_format($rating->total_ulasan / $rating->jml_ulasan, 0) ?>' style="color: yellow;" disabled></div> -->
@@ -392,7 +405,6 @@
 
 
 <script>
-
 	var link = "<?php echo site_url('user/home') ?>";
 
 	var id_produk = "<?php echo $detail_produk[0]['id_produk'] ?>";
@@ -615,17 +627,34 @@
 
 			success: function(result) {
 
+				if (result.harga_promo == null) {
 
+					$('[name="harga"]').val(result.harga);
 
-				$('[name="harga"]').val(result.harga);
+					$('[name="harga_jumlah"]').val(result.harga);
 
-				$('[name="harga_jumlah"]').val(result.harga);
+					$('[name="harga_term"]').val(result.harga);
 
-				$('[name="harga_term"]').val(result.harga);
+					$('#harga_jual').html(to_rupiah(result.harga));
 
-				$('#harga_jual').html(to_rupiah(result.harga));
+					$('#subtotal').html(to_rupiah(result.harga));
 
-				$('#subtotal').html(to_rupiah(result.harga));
+				} else {
+
+					$('[name="harga"]').val(result.harga_promo);
+
+					$('[name="harga_jumlah"]').val(result.harga_promo);
+
+					$('[name="harga_term"]').val(result.harga_promo);
+
+					$('#harga_jual_old').html(to_rupiah(result.harga));
+					$('#harga_jual').html(to_rupiah(result.harga_promo));
+
+					$('#subtotal_old').html(to_rupiah(result.harga));
+					$('#subtotal').html(to_rupiah(result.harga_promo));
+
+				}
+
 
 
 
@@ -673,12 +702,12 @@
 
 		let input = $(this).parent().find('#jumlah_beli');
 
-		if(Number(input.val()) > 1) {
+		if (Number(input.val()) > 1) {
 
-		input.val(Number(input.val()) - 1);
-		
+			input.val(Number(input.val()) - 1);
+
 		};
-		
+
 		let it = $(this).parent().parent().parent().parent().parent().parent();
 
 		jumlahChange(it);
@@ -788,5 +817,4 @@
 		return rev2.split('').reverse().join('') + ',-';
 
 	}
-
 </script>

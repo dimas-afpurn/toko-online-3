@@ -3,6 +3,7 @@
         <ol class="breadcrumb">
             <li><a href="<?= base_url() ?>">Home</a></li>
             <li class="active">Produk</li>
+            <li class="active"><?= ucwords($ktg->nama_kategori_produk) ?></li>
         </ol>
         <h2>Produk Kami</h2>
         <div class="col-md-9 product-model-sec">
@@ -14,15 +15,32 @@
                             <img style="width: contain; height: 250px; object-fit: cover;" src="<?= base_url() ?>assets/img/produk_penjual/<?= $prod['foto_produk1'] ?>" class="img-responsive" alt="" />
                             <div class="b-wrapper">
                                 <h4 class="b-animate b-from-left  b-delay03">
-                                    <button class="btns"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Lihat</button>
+                                    <button class="btn">Lihat Detail</button>
+                                    <!-- <button class="btn"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>Lihat</button> -->
                                 </h4>
                             </div>
                         </div>
                         <div class="product-info simpleCart_shelfItem">
                             <div class="product-info-cust prt_name">
                                 <h4><?= substr($prod['nama_produk'], 0, 18) . "...." ?></h4>
-                                <p>Id: <?= $prod['id_produk'] ?></p>
-                                <span class="item_price">Rp. <?= number_format($prod['harga'], 0, ',', '.') ?></span>
+                                <!-- <p>Id: <?= $prod['id_produk'] ?></p> -->
+                                <p></p>
+                                <?php if (isset($prod['harga_promo'])) : ?>
+                                    <?php date_default_timezone_set("Asia/Jakarta");
+                                    $now = date('Y-m-d H:i:s');
+                                    $now = date('Y-m-d H:i:s', strtotime($now));
+
+                                    $mulai = date('Y-m-d H:i:s', strtotime($prod['tgl_mulai']));
+                                    $selesai = date('Y-m-d H:i:s', strtotime($prod['tgl_selesai']));
+
+                                    if (($now >= $mulai) && ($now <= $selesai)) { ?>
+                                        <span class="item_price">Rp. <s><?= number_format($prod['harga'], 0, ',', '.') ?></s> <?= number_format($prod['harga_promo'], 0, ',', '.') ?></span>
+                                    <?php } else { ?>
+                                        <span class="item_price">Rp. <?= number_format($prod['harga'], 0, ',', '.') ?></span>
+                                    <?php } ?>
+                                <?php else : ?>
+                                    <span class="item_price">Rp. <?= number_format($prod['harga'], 0, ',', '.') ?></span>
+                                <?php endif; ?>
                             </div>
                             <div class="clearfix"> </div>
                         </div>
@@ -37,11 +55,28 @@
                     <?php foreach ($kategori as $kate) : ?>
                         <div class="tab1">
                             <ul class="place">
-                                <li class="sort"><a href="<?= base_url($kate['url_slug_kategori']) ?>"><?= $kate['nama_kategori_produk'] ?></a></li>
+                                <li class="sort"><a href="<?= base_url($kate['url_slug_kategori']) ?>"><?= ucwords($kate['nama_kategori_produk']) ?></a></li>
                                 <div class="clearfix"> </div>
                             </ul>
                         </div>
                     <?php endforeach; ?>
+                </div>
+                <div class="product_right">
+                    <h4 class="m_2"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Filter</h4>
+                    <div class="tab1">
+                        <ul class="place">
+                            <li class="sort"><a href="<?= base_url('produk/produk-terbaru') ?>">Produk Terbaru</a></li>
+                            <div class="clearfix"> </div>
+                        </ul>
+                        <ul class="place">
+                            <li class="sort"><a href="<?= base_url('produk/produk-termurah') ?>">Produk Termurah</a></li>
+                            <div class="clearfix"> </div>
+                        </ul>
+                        <ul class="place">
+                            <li class="sort"><a href="<?= base_url('produk/produk-terlaris') ?>">Produk Terlaris</a></li>
+                            <div class="clearfix"> </div>
+                        </ul>
+                    </div>
                 </div>
             </section>
             <script type="text/javascript" src="<?= base_url() ?>assets/js/jquery-ui.min.js"></script>

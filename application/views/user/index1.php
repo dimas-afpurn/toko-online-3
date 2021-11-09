@@ -94,7 +94,7 @@
 
 									<form method="POST" action="<?= base_url() ?>user/Home/keranjang_belanja">
 
-									<!-- <form id="formAksi"> -->
+										<!-- <form id="formAksi"> -->
 
 										<input type="hidden" value="1" name="jumlah_beli">
 
@@ -208,7 +208,7 @@
 
 								<div class="color 2">
 
-								<form method="POST" action="<?= base_url() ?>user/Home/keranjang_belanja">
+									<form method="POST" action="<?= base_url() ?>user/Home/keranjang_belanja">
 
 										<input type="hidden" value="1" name="jumlah_beli">
 
@@ -319,36 +319,36 @@
 							<div class="item-info">
 
 								<div class="color 2">
-								
-								<form method="POST" action="<?= base_url() ?>user/Home/keranjang_belanja">
 
-	<input type="hidden" value="1" name="jumlah_beli">
+									<form method="POST" action="<?= base_url() ?>user/Home/keranjang_belanja">
 
-	<input type="hidden" name="harga" value="<?= $prod['harga'] ?>">
+										<input type="hidden" value="1" name="jumlah_beli">
 
-	<input type="hidden" name="id_produk" value="<?= $prod['id_produk'] ?>">
+										<input type="hidden" name="harga" value="<?= $prod['harga'] ?>">
 
-	<input type="hidden" name="berat_kotor" value="<?= $prod['berat_kotor'] ?>">
+										<input type="hidden" name="id_produk" value="<?= $prod['id_produk'] ?>">
 
-	<input type="hidden" value="1" name="quantity">
+										<input type="hidden" name="berat_kotor" value="<?= $prod['berat_kotor'] ?>">
 
-	<input type="hidden" name="harga_jumlah" value="<?= $prod['harga'] ?>">
+										<input type="hidden" value="1" name="quantity">
 
-	<input type="hidden" name="harga_term">
+										<input type="hidden" name="harga_jumlah" value="<?= $prod['harga'] ?>">
 
-	<input type="hidden" name="potongan">
+										<input type="hidden" name="harga_term">
 
-	<input type="hidden" name="ip_number" value="<?php echo $this->session->userdata('id_kpesan'); ?>">
+										<input type="hidden" name="potongan">
 
-	<!-- <a href="<?= base_url('user/Home/detail/' . $prod['id_produk']) ?>" style="color: white; margin-bottom: 30px;">Detail</a> -->
+										<input type="hidden" name="ip_number" value="<?php echo $this->session->userdata('id_kpesan'); ?>">
 
-	<!-- <a href="javascript:{}" onclick="document.getElementById('keranjang').submit();" style="color: white; margin-bottom: 30px;">Beli</a> -->
+										<!-- <a href="<?= base_url('user/Home/detail/' . $prod['id_produk']) ?>" style="color: white; margin-bottom: 30px;">Detail</a> -->
 
-	<button type="button" style="background-color: #046464;margin-bottom:50px;" onclick="window.location.href='<?= base_url($ktg['url_slug_kategori'] . '/' . $prod['url_slug_produk']) ?>'" class="btn btn-success" style="background-color: #046464;">Detail</button>
+										<!-- <a href="javascript:{}" onclick="document.getElementById('keranjang').submit();" style="color: white; margin-bottom: 30px;">Beli</a> -->
 
-	<button type="submit" class="btn btn-success" style="background-color: #046464;margin-bottom:50px;">Beli</button>
+										<button type="button" style="background-color: #046464;margin-bottom:50px;" onclick="window.location.href='<?= base_url($ktg['url_slug_kategori'] . '/' . $prod['url_slug_produk']) ?>'" class="btn btn-success" style="background-color: #046464;">Detail</button>
 
-</form>
+										<button type="submit" class="btn btn-success" style="background-color: #046464;margin-bottom:50px;">Beli</button>
+
+									</form>
 								</div>
 
 							</div>
@@ -382,7 +382,6 @@
 
 
 <script>
-
 	var link = "<?php echo site_url('user/home') ?>";
 
 	var id_produk = "<?php echo $detail_produk[0]['id_produk'] ?>";
@@ -778,5 +777,4 @@
 		return rev2.split('').reverse().join('') + ',-';
 
 	}
-
 </script>

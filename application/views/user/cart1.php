@@ -1,7 +1,7 @@
 <div class="cart_main" style="margin-bottom:80px;">
 
     <div class="container">
-    <?= $this->session->flashdata('message'); ?>
+        <?= $this->session->flashdata('message'); ?>
 
 
         <ol class="breadcrumb">
@@ -19,7 +19,6 @@
             $msg = $this->session->flashdata('cart');
 
             echo $msg;
-
         }
 
         ?>
@@ -29,11 +28,9 @@
             <h2>Keranjang belanja (<?php if ($total[0]['total_jumlah'] == null) {
 
                                         echo '0';
-
                                     } else {
 
                                         echo $total[0]['total_jumlah'];
-
                                     } ?>)</h2>
 
             <?php foreach ($cart as $ca) : ?>
@@ -61,7 +58,15 @@
 
                             <h3><?= ucwords($ca['nama_produk']) ?><span>ID: <?= $ca['id_produk'] ?></span></h3>
 
-                            <h4><span>Rp. </span><?= number_format($ca['harga'], 0, ',', '.') ?></h4>
+                            <?php if (isset($ca['harga_promo'])) : ?>
+
+                                <h4><span>Rp. </span><s><?= number_format($ca['harga'], 0, ',', '.') ?></s> <?= number_format($ca['harga_promo'], 0, ',', '.') ?></h4>
+
+                            <?php else : ?>
+
+                                <h4><span>Rp. </span><?= number_format($ca['harga_promo'], 0, ',', '.') ?></h4>
+
+                            <?php endif; ?>
 
                             <div class="row" style="margin-top: 20px;">
 
