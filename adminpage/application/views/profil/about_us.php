@@ -3,7 +3,7 @@
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsepanduan" aria-expanded="true" aria-controls="collapseOne">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapsepanduan" aria-expanded="true" aria-controls2">
           Panduan
         </a>
       </h4>
@@ -20,11 +20,32 @@
   </div>
 </div>
 
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading2">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapse_deskripsi" aria-expanded="true" aria-controls="collapse2">
+          Deskripsi
+        </a>
+      </h4>
+    </div>
+    <div id="collapse_deskripsi" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+      <div class="panel-body">
+        <form action="<?php echo base_url('profil/update_deskripsi/1') ?>" method="POST">
+          <textarea name='deskripsi' class="ckeditor" style='width: 800px; height: 350px;'><?php echo $data1[0]->tentang ?></textarea>
+          <br>
+          <button type="submit" class="btn btn-primary" style="float:right;">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel-group" id="accordion3" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
           Contact
         </a>
       </h4>

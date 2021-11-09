@@ -202,7 +202,18 @@ class Profil extends CI_Controller
 		redirect('profil/show_profil');
 	}
 
-
+	public function update_deskripsi($id)
+	{
+		// $this->load->model('cilinaya_model');
+		// $this->cilinaya_model->update_deskripsi($id);
+		$deskripsi = $this->input->post("deskripsi");
+		$data = array(
+			'tentang' => $deskripsi
+		);
+		$this->db->update('konten', $data, array('id_konten' => $id));
+		$this->session->set_flashdata('item', '<div class="alert alert-info" role="alert"><strong>Deskripsi Berhasil di Perbarui</strong></div>');
+		redirect('profil/show_profil');
+	}
 
 	public function null_konten($id)
 	{
