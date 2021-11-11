@@ -491,7 +491,8 @@ class Home extends CI_Controller
 
 		// $data['menu'] =$this->toko_online_model->get_table_where('menu', array('aktif_menu' => 1));
 
-		$data['detail_produk'] = $this->toko_online_model->get_table_where('produk', array('id_produk' => $id_produk));
+		// $data['detail_produk'] = $this->toko_online_model->get_table_where('produk', array('id_produk' => $id_produk));
+		$data['detail_produk'] = $this->toko_online_model->get_detail_produk($id_produk);
 
 		$data['content'] = 'user/produk_detail1';
 

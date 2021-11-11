@@ -208,6 +208,16 @@ class Toko_online_model extends CI_Model
         return $query->result_array();
     }
 
+    function get_detail_produk($id)
+    {
+        $this->db->select('*');
+        $this->db->where('id_produk', $id);
+        $this->db->from('produk');
+        $this->db->join('promo', 'produk.id_produk=promo.id_produk_promo', 'left outer');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     function get_table_where($table, $where)
     {
 

@@ -1,199 +1,111 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/select2.min.css">
-
 <script src="<?php echo base_url() ?>assets/sweetalert/sweetalert.min.js"></script>
-
 <!-- <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/produk-detail.css">	 -->
-
 <div class="single-sec">
-
 	<div class="container">
-
 		<ol class="breadcrumb">
-
 			<li><a href="<?= base_url('user/Home') ?>">Home</a></li>
-
 			<li class="active">Detail Produk</li>
 			<li class="active"><?= $detail_produk[0]['nama_produk'] ?></li>
-
 		</ol>
-
 		<!-- start content -->
-
 		<div class="col-md-12 det" style="margin-bottom: 80px;">
-
 			<div class="single_left">
-
 				<div class="grid images_3_of_2">
-
 					<ul id="etalage">
-
 						<li style="width: 300px;">
-
 							<a href="">
-
 								<?php if ($detail_produk[0]['foto_produk1'] == null) : ?>
-
-
-
 								<?php else : ?>
-
 									<img class="etalage_thumb_image" style="width:300px;" src="<?= base_url() ?>assets/img/produk_penjual/<?= $detail_produk[0]['foto_produk1'] ?>" class="img-responsive" />
-
 									<img class="etalage_source_image" style="width:300px;" src="<?= base_url() ?>assets/img/produk_penjual/<?= $detail_produk[0]['foto_produk1'] ?>" class="img-responsive" title="" />
-
 								<?php endif; ?>
-
 							</a>
-
 						</li>
-
 						<li style="width: 300px;">
-
 							<?php if ($detail_produk[0]['foto_produk2'] == null) : ?>
-
-
-
 							<?php else : ?>
-
 								<img class="etalage_thumb_image" style="width: contain; height: 250px; object-fit: cover;" src="<?= base_url() ?>assets/img/produk_penjual/<?= $detail_produk[0]['foto_produk2'] ?>" class="img-responsive" />
-
 								<img class="etalage_source_image" style="width:300px;" src="<?= base_url() ?>assets/img/produk_penjual/<?= $detail_produk[0]['foto_produk2'] ?>" class="img-responsive" title="" />
-
 							<?php endif; ?>
-
 						<li style="width: 300px;">
-
 							<?php if ($detail_produk[0]['foto_produk3'] == null) : ?>
-
-
-
 							<?php else : ?>
-
 								<img class="etalage_thumb_image" style="width: contain; height: 250px; object-fit: cover;" src="<?= base_url() ?>assets/img/produk_penjual/<?= $detail_produk[0]['foto_produk3'] ?>" class="img-responsive" />
-
 								<img class="etalage_source_image" style="width: contain; height: 250px; object-fit: cover;" src="<?= base_url() ?>assets/img/produk_penjual/<?= $detail_produk[0]['foto_produk3'] ?>" class="img-responsive" title="" />
-
 							<?php endif; ?>
-
 						</li>
-
 					</ul>
-
 					<div class="clearfix"></div>
-
 				</div>
-
 			</div>
-
 			<div class="single-right">
-
 				<h3><?= $detail_produk[0]['nama_produk'] ?></h3>
-
 				<div class="id">
-
 					<h4>ID: <?= $detail_produk[0]['id_produk'] ?></h4>
-
 					<h4>Berat Bersih: <?php echo $detail_produk[0]['berat_bersih'] ?> gram</h4>
-
 					<?php if ($detail_produk[0]['jumlah_stok'] > 0) : ?>
-
 						<h4>Stok: <?php echo $detail_produk[0]['jumlah_stok'] ?> items</h4>
-
 					<?php else : ?>
-
 						<h4>Stok: 0 items</h4>
-
 					<?php endif; ?>
-
 				</div>
-
 				<div class="cost" style="margin-top: 20px;">
-
 					<div class="prdt-cost">
-
 						<ul>
-
 							<li>
-
 								<h4>Harga per Satuan</h4>
-
 							</li>
-
 							<?php if (isset($detail_produk[0]['harga_promo'])) : ?>
-
-								<li class="active">Rp. <s><span id="harga_jual_old"></span></s> <span id="harga_jual"></span></li>
-
-								<li>
-
-									<h4>Subtotal </h4>
-
-								</li>
-
-								<li class="active">Rp. <span id="subtotal"></span> </li>
-
+								<?php date_default_timezone_set("Asia/Jakarta");
+								$now = date('Y-m-d H:i:s');
+								$now = date('Y-m-d H:i:s', strtotime($now));
+								$mulai = date('Y-m-d H:i:s', strtotime($detail_produk[0]['tgl_mulai']));
+								$selesai = date('Y-m-d H:i:s', strtotime($detail_produk[0]['tgl_selesai']));
+								if (($now >= $mulai) && ($now <= $selesai)) : ?>
+									<li class="active">Rp. <s><span id="harga_jual_old"></span></s> <span id="harga_jual"></span></li>
+									<li>
+										<h4>Subtotal </h4>
+									</li>
+									<li class="active">Rp. <span id="subtotal"></span> </li>
+								<?php else : ?>
+									<li class="active">Rp. <span id="harga_jual"></span> </li>
+									<li>
+										<h4>Subtotal </h4>
+									</li>
+									<li class="active">Rp. <span id="subtotal"></span> </li>
+								<?php endif; ?>
 							<?php else : ?>
 								<li class="active">Rp. <span id="harga_jual"></span> </li>
-
 								<li>
-
 									<h4>Subtotal </h4>
-
 								</li>
-
 								<li class="active">Rp. <span id="subtotal"></span> </li>
-
 							<?php endif; ?>
-
 							<form method="POST" action="<?= base_url() ?>user/Home/keranjang_belanja">
-
 								<!-- <form id="formAksi"> -->
-
 								<input type="hidden" value="1" name="quantity">
-
 								<input type="hidden" name="harga">
-
 								<input type="hidden" name="harga_jumlah">
-
 								<input type="hidden" name="harga_term">
-
 								<input type="hidden" name="potongan">
-
 								<input type="hidden" name="id_produk" value="<?php echo $detail_produk[0]['id_produk'] ?>">
-
 								<input type="hidden" name="jumlah_stok" value="<?php echo $detail_produk[0]['jumlah_stok'] ?>">
-
 								<input type="hidden" name="berat_kotor" value="<?php echo $detail_produk[0]['berat_kotor'] ?>">
-
 								<input type="hidden" name="ip_number" value="<?php echo $this->session->userdata('id_kpesan'); ?>">
-
 								<div style="display: flex;">
-
 									<button type="button" id="minus_jumlah" class="btn btn-success pull-left" style="padding: 2px 5px 0;"><i class="fa fa-minus fa-fw"></i></button>
-
 									<input required type="text" class="form-control col-md" id="jumlah_beli" name="jumlah_beli" style="width: 50px; margin: 0 5px; height: 28px; padding: 0 8px; text-align: center; border-radius: 6px;" value="1">
-
 									<button type="button" id="plus_jumlah" class="btn btn-success pull-left" style="padding: 2px 5px 0"><i class="fa fa-plus fa-fw"></i></button>
-
 								</div>
-
 								<br />
-
 								<?php foreach ($voucher as $v) { ?>
-
 									<div class="css-7k2jum" data-testid="PDPDetailVoucher[0]" onclick="cek_voucher(<?php echo $v->id ?>)">
-
 										<div class="css-10wy6qd" id="merchant-voucher-ANNVPM24" data-testid="MerchantVoucher">
-
 											<div class="css-17w967y">
-
-
-
 											</div>
-
 											<div class="css-7yj588">
-
 												<p data-unify="Typography" class="css-19gt17v-unf-heading-unf-heading e1qvo2ff8" data-testid="MerchantVoucherType"></p>
-
 												<h2 class="css-whbpyf" data-testid="MerchantVoucherValue"><?php echo 'Rp ' . number_format($v->nominal) ?></h2>
 
 												<p class="css-uswdof">min. Pembelian <strong data-testid="MerchantVoucherMinSpend"><?php echo $v->keterangan_syarat ?></strong></p>
@@ -627,7 +539,43 @@
 
 			success: function(result) {
 
-				if (result.harga_promo == null) {
+				if (result.harga_promo != null) {
+
+					var now = new Date().toLocaleString();
+					var day = Date.parse(now);
+					// $now = date('Y-m-d H:i:s', strtotime($now));
+
+					var mulai = Date.parse(result.tgl_mulai);
+					var selesai = Date.parse(result.tgl_selesai);
+
+					if ((day >= mulai) && (day <= selesai)) {
+						// alert('ada promo berlaku');
+						$('[name="harga"]').val(result.harga_promo);
+
+						$('[name="harga_jumlah"]').val(result.harga_promo);
+
+						$('[name="harga_term"]').val(result.harga_promo);
+
+						$('#harga_jual_old').html(to_rupiah(result.harga));
+						$('#harga_jual').html(to_rupiah(result.harga_promo));
+
+						$('#subtotal_old').html(to_rupiah(result.harga));
+						$('#subtotal').html(to_rupiah(result.harga_promo));
+					} else {
+						// alert("ada promo tidak berlaku");
+						$('[name="harga"]').val(result.harga);
+
+						$('[name="harga_jumlah"]').val(result.harga);
+
+						$('[name="harga_term"]').val(result.harga);
+
+						$('#harga_jual').html(to_rupiah(result.harga));
+
+						$('#subtotal').html(to_rupiah(result.harga));
+					}
+
+				} else {
+					// alert("tidak ada promo");
 
 					$('[name="harga"]').val(result.harga);
 
@@ -638,20 +586,6 @@
 					$('#harga_jual').html(to_rupiah(result.harga));
 
 					$('#subtotal').html(to_rupiah(result.harga));
-
-				} else {
-
-					$('[name="harga"]').val(result.harga_promo);
-
-					$('[name="harga_jumlah"]').val(result.harga_promo);
-
-					$('[name="harga_term"]').val(result.harga_promo);
-
-					$('#harga_jual_old').html(to_rupiah(result.harga));
-					$('#harga_jual').html(to_rupiah(result.harga_promo));
-
-					$('#subtotal_old').html(to_rupiah(result.harga));
-					$('#subtotal').html(to_rupiah(result.harga_promo));
 
 				}
 

@@ -59,13 +59,20 @@
                             <h3><?= ucwords($ca['nama_produk']) ?><span>ID: <?= $ca['id_produk'] ?></span></h3>
 
                             <?php if (isset($ca['harga_promo'])) : ?>
+                                <?php date_default_timezone_set("Asia/Jakarta");
+                                $now = date('Y-m-d H:i:s');
+                                $now = date('Y-m-d H:i:s', strtotime($now));
 
-                                <h4><span>Rp. </span><s><?= number_format($ca['harga'], 0, ',', '.') ?></s> <?= number_format($ca['harga_promo'], 0, ',', '.') ?></h4>
+                                $mulai = date('Y-m-d H:i:s', strtotime($ca['tgl_mulai']));
+                                $selesai = date('Y-m-d H:i:s', strtotime($ca['tgl_selesai']));
 
+                                if (($now >= $mulai) && ($now <= $selesai)) { ?>
+                                    <h4><span>Rp. </span><s><?= number_format($ca['harga'], 0, ',', '.') ?></s> <?= number_format($ca['harga_promo'], 0, ',', '.') ?></h4>
+                                <?php } else { ?>
+                                    <h4><span>Rp. </span><?= number_format($ca['harga'], 0, ',', '.') ?></h4>
+                                <?php } ?>
                             <?php else : ?>
-
-                                <h4><span>Rp. </span><?= number_format($ca['harga_promo'], 0, ',', '.') ?></h4>
-
+                                <h4><span>Rp. </span><?= number_format($ca['harga'], 0, ',', '.') ?></h4>
                             <?php endif; ?>
 
                             <div class="row" style="margin-top: 20px;">

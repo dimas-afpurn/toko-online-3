@@ -69,7 +69,6 @@
             <label for="inputEmail3" class="col-sm-2 control-label">Provinsi</label>
             <div class="col-sm-10">
               <select name="provinsi" id="prov_tujuan" class="form-control" required oninvalid="this.setCustomValidity('Provinsi belum dipilih')" oninput="setCustomValidity('')">
-                <option value="" disabled selected hidden>pilih provinsi</option>
               </select>
             </div>
           </div>
@@ -77,7 +76,11 @@
             <label for="inputEmail3" class="col-sm-2 control-label">Kota/Kab</label>
             <div class="col-sm-10">
               <select name="kota" id="kota_tujuan" class="form-control" required oninvalid="this.setCustomValidity('Kota/Kab belum dipilih')" oninput="setCustomValidity('')">
-                <option value="" disabled selected hidden>pilih kota</option>
+                <?php if (isset($data[0]['kota'])) : ?>
+                  <option value="<?php echo $data[0]['kota'] ?>"><?php echo $data[0]['nama_kota'] ?></option>
+                <?php else : ?>
+                  <option value="" disabled selected hidden>pilih kota</option>
+                <?php endif; ?>
               </select>
             </div>
           </div>
@@ -123,7 +126,8 @@
     e.preventDefault();
     var provinsi = $('option:selected', this).attr('nama_provinsi');
     var option = $('option:selected', this).val();
-    $('#kota_tujuan option:gt(0)').remove();
+    document.getElementById("kota_tujuan")
+    $("#kota_tujuan option[value='']").remove();
 
     $("input[name=lbl_prov]").val(provinsi);
 
@@ -133,6 +137,7 @@
       $("#kurir").prop("disabled", true);
     } else {
       $("#kota_tujuan").prop("disabled", false);
+      $('#kota_tujuan option:gt(0)').remove();
       getKota(option);
     }
   });
@@ -153,7 +158,7 @@
     $.getJSON("kota/" + idpro, function(data) {
       $.each(data, function(i, field) {
 
-        $op.append('<option value="' + field.city_id + '"nama_kota="' + field.type + ' ' + field.city_name + '">' + field.type + ' ' + field.city_name + '</option>');
+        $op.HTML('<option value="' + field.city_id + '"nama_kota="' + field.type + ' ' + field.city_name + '">' + field.type + ' ' + field.city_name + '</option>');
 
       });
 
