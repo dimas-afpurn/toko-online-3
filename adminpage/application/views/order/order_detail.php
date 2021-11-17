@@ -62,7 +62,7 @@
 							</tr>
 							<tr>
 								<td><strong>Jenis Pembayaran</strong></td>
-								<?php if($k['payment_type'] == "bank_transfer") {
+								<?php if ($k['payment_type'] == "bank_transfer") {
 									$type = "Transfer Bank";
 								} elseif ($k['payment_type'] == "gopay") {
 									$type = "Gopay";
@@ -71,11 +71,11 @@
 							</tr>
 							<tr>
 								<td><strong>Total Bayar</strong></td>
-								<td><input type="text" name="nama_bank" value="Rp. <?php echo number_format($k['gross_amount'],'2',',','.') ?>" disabled></td>
+								<td><input type="text" name="nama_bank" value="Rp. <?php echo number_format($k['gross_amount'], '2', ',', '.') ?>" disabled></td>
 							</tr>
 							<tr>
 								<td><strong>Status Transaksi</strong></td>
-								<?php if($k['status_code'] == 201) {
+								<?php if ($k['status_code'] == 201) {
 									$stat = "Menunggu Pembayaran";
 								} elseif ($k['status_code'] == 200) {
 									$stat = "Lunas";
@@ -137,7 +137,7 @@
 		<div class="col-sm-12">
 			<div style="display: flex">
 				<h4>Daftar Order</h4>
-				<?php if ( $status >= 2) : ?>
+				<?php if ($status == 2) : ?>
 					<a href="<?= base_url() . 'order/kirim/' . $id_order ?>" style="margin: auto; margin-right:0;" class="btn  btn-success">Kirim</a>
 				<?php endif; ?>
 			</div>

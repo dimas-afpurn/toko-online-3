@@ -75,6 +75,16 @@ class Order extends CI_Controller
 		$this->form_validation->set_rules('no_hp', 'Nomor HP', 'trim|required');
 		$this->form_validation->set_rules('email', 'Email', 'valid_email|trim|required');
 		if ($this->form_validation->run() == false) {
+			$nama 			= $this->input->post('nama_lengkap');
+			$phone 			= $this->input->post('no_hp');
+			$email 			= $this->input->post('email');
+			$data 			= array(
+				'nama_lengkap'	=> $nama,
+				'no_hp'			=> $phone,
+				'email'			=> $email
+			);
+			// echo json_encode($data);
+			// die;
 			$data['title'] = "Checkout | blonjosam.com";
 			$data['konten'] = $this->toko_online_model->get_table('konten');
 			$data['jumlah'] = $this->toko_online_model->get_jumlah('keranjang_belanja', array('id_keranjang_belanja' => $this->session->userdata('id_kpesan')), 'jumlah_produk', 'berat_total');
@@ -83,7 +93,7 @@ class Order extends CI_Controller
 			$penjual = $this->toko_online_model->get_penjual_cart(array('keranjang_belanja.id_keranjang_belanja' => $this->session->userdata('id_kpesan')));
 			$angka = 0;
 			foreach ($penjual as $p) {
-				$data_penjual[$angka] = $this->toko_online_model->get_table_where2('user', array('id_user' => $p['id_user']));
+				$data_penjual[$angka] = $this->toko_online_model->get_table_where('user', array('id_user' => $p['id_user']));
 				$angka++;
 			}
 			$data['penjual'] = $data_penjual;
@@ -142,6 +152,8 @@ class Order extends CI_Controller
 					'email_order'	=> $email,
 					'batas_bayar'	=> $expired
 				);
+				// echo json_encode($data_insert);
+				// die;
 			} else {
 				$data_insert = array(
 					'id_order'		=> $next_id_order,
@@ -163,6 +175,8 @@ class Order extends CI_Controller
 					'batas_bayar'	=> $expired,
 					'kode_member'     => $this->session->userdata('kode_member')
 				);
+				// echo json_encode($data_insert);
+				// die;
 			}
 
 			$insert_order = $this->toko_online_model->insert_table('order', $data_insert);
@@ -418,26 +432,32 @@ class Order extends CI_Controller
 	public function komplain_barang($id_detail_order = null)
 	{
 
-		$data_order = $this->toko_online_model->get_table_where2('detail_order', array('id_detail_order' => $id_detail_order));
-		$user = $this->toko_online_model->get_table_where2('user', array('id_user' => $data_order[0]['id_penjual']));
-		$order = $this->toko_online_model->get_table_where2('order', array('id_order' => $data_order[0]['id_order']));
-		$produk = $this->toko_online_model->get_table_where2('produk', array('id_produk' => $data_order[0]['id_produk']));
-		$data_komplain = $this->toko_online_model->get_table_where2('komplain_barang', array('id_detail_order' => $id_detail_order));
+		$data_order = $this->toko_online_model->get_table_where('detail_order', array('id_detail_order' => $id_detail_order));
+		// $user = $this->toko_online_model->get_table_where('user', array('id_user' => $data_order[0]['id_penjual']));
+
+		$order = $this->toko_online_model->get_table_where('order', array('id_order' => $data_order[0]['id_order']));
+		$produk = $this->toko_online_model->get_table_where('produk', array('id_produk' => $data_order[0]['id_produk']));
+		$data_komplain = $this->toko_online_model->get_table_where('komplain_barang', array('id_detail_order' => $id_detail_order));
 		// $id_detail_order= $this->input->post('id_detail_order');
 		// $data_detail_order = $this->toko_online_model->get_order(array('id_detail_order' => $id_detail_order));
 		// $data_order= $this->toko_online_model->get_table_where('order', array('id_order' => $data_detail_order[0]['id_order']));
 		// $data_penjual = $this->toko_online_model->get_table_where('user', array('id_user' => $data_detail_order[0]['id_penjual']));
 
+		// echo json_encode($data_komplain);
+		// die;
 
 		$data = array(
 			'data_order' => $data_order,
-			'user'		=>	$user,
+			// 'user'		=>	$user,
 			'order'		=> $order,
 			'produk'	=>	$produk,
 			'komplain_barang' =>	$data_komplain
 		);
 
-		$data['content'] = 'user/komplain_barang1';
+		$data['bank'] = $this->toko_online_model->get_table('data_bank');
+
+		$data['content'] 	= 'user/komplain_barang1';
+		$data['title']		= "Komplain Barang | blonjosam.com";
 		$this->load->view('user/dashboard1', $data);
 	}
 
@@ -492,7 +512,7 @@ class Order extends CI_Controller
 			// }
 		}
 		$detail_order = $this->toko_online_model->get_order(array('detail_order.id_detail_order' => $id_detail_order));
-		$get_penjual = $this->toko_online_model->get_table_where2('user', array('id_user' => $id_penjual));
+		$get_penjual = $this->toko_online_model->get_table_where('user', array('id_user' => $id_penjual));
 		$data = array(
 			'id_order'		=> $detail_order[0]['id_order'],
 			'detail_order'	=> $detail_order

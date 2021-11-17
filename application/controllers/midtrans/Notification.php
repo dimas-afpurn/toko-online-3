@@ -44,7 +44,8 @@ class Notification extends CI_Controller
 			$update = $this->db->update('transaksi_midtrans', $data, array('id_order' => $id_order));
 			if ($update) {
 				$dt = array(
-					'status_bayar' => 1
+					'status_bayar' => 1,
+					'status_order' => 2
 				);
 				$this->db->update('order', $dt, array('id_order' => $id_order));
 			}

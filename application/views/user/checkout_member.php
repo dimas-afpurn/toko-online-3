@@ -163,21 +163,21 @@
 
                 <div class="card-body">
 
-                    <input name="nama_lengkap" type="hidden" class="form-control" id="nama_lengkap_field">
+                    <input name="nama_lengkap" type="text" class="form-control" id="nama_lengkap_field">
 
-                    <input name="no_hp" type="hidden" class="form-control" id="no_hp_field">
+                    <input name="no_hp" type="text" class="form-control" id="no_hp_field">
 
-                    <input name="email" type="hidden" class="form-control" id="email_field">
+                    <input name="email" type="text" class="form-control" id="email_field">
 
-                    <input name="city_id" type="hidden" class="form-control" id="city_id_field">
+                    <input name="city_id" type="text" class="form-control" id="city_id_field">
 
-                    <input name="province_id" type="hidden" class="form-control" id="province_id_field">
+                    <input name="province_id" type="text" class="form-control" id="province_id_field">
 
-                    <input type="hidden" id="nama_provinsi" name="nama_provinsi">
+                    <input type="text" id="nama_provinsi" class="form-control" name="nama_provinsi">
 
-                    <input type="hidden" id="nama_kota" name="nama_kota">
+                    <input type="text" id="nama_kota" class="form-control" name="nama_kota">
 
-                    <input type="hidden" id="alamat_lengkap" name="alamat_lengkap">
+                    <input type="text" id="alamat_field" class="form-control" name="alamat_lengkap">
 
                     <div class="table-responsive">
 
@@ -422,7 +422,7 @@
 
                 $('#no_telp').html(result.no_telp);
 
-                $('#alamat').html(result.alamat);
+                $('#alamat-field').html(result.alamat);
 
                 $('#kota').html(result.kota);
 
@@ -439,6 +439,9 @@
                 $('#no_hp_field').val(result.no_telp);
 
                 $('#email_field').val(result.email);
+
+                var c = result.alamat;
+                alert(c);
 
                 $('#city_id_field').val(result.city_id);
 
