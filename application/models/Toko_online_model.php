@@ -883,8 +883,9 @@ class Toko_online_model extends CI_Model
 
     public function ajax_get_alamat_profil($id)
     {
-        $this->db->from('detail_alamat');
-        $this->db->where('id_member', $id);
+        $this->db->from('member');
+        $this->db->join('detail_alamat', 'member.id_member=detail_alamat.id_member', 'left');
+        $this->db->where('member.id_member', $id);
         $query = $this->db->get();
         return $query->row();
     }

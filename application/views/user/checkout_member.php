@@ -50,13 +50,14 @@
 
                                         <div class="col-sm-3">
 
-                                            <span id="nama_lengkap"></span> (+62) <span id="no_telp"></span>
+                                            <span id="nama_lengkap"></span> | <span id="no_telp"></span>
+                                            <span id="email"></span>
 
                                         </div>
 
                                         <div class="col-sm-7">
 
-                                            <span id="alamat"></span>, <span id="kota"></span> , <span id="provinsi"></span>, ID <span id="kode_pos"></span>
+                                            <span id="alamat"></span>, <span id="kota"></span> , <span id="provinsi"></span> <span id="kode_pos"></span>
 
                                         </div>
 
@@ -154,6 +155,9 @@
                     </div>
 
                 </div>
+                <span class="text-info ml-3 mb-3">
+                    <h6>*Barang akan dikirim dari <?php echo $lokasi[0]['nama_kota'] ?></h6>
+                </span>
 
             </div>
 
@@ -163,21 +167,21 @@
 
                 <div class="card-body">
 
-                    <input name="nama_lengkap" type="text" class="form-control" id="nama_lengkap_field">
+                    <input name="nama_lengkap" type="hidden" class="form-control" id="nama_lengkap_field">
 
-                    <input name="no_hp" type="text" class="form-control" id="no_hp_field">
+                    <input name="no_hp" type="hidden" class="form-control" id="no_hp_field">
 
-                    <input name="email" type="text" class="form-control" id="email_field">
+                    <input name="email" type="hidden" class="form-control" id="email_field">
 
-                    <input name="city_id" type="text" class="form-control" id="city_id_field">
+                    <input name="city_id" type="hidden" class="form-control" id="city_id_field">
 
-                    <input name="province_id" type="text" class="form-control" id="province_id_field">
+                    <input name="province_id" type="hidden" class="form-control" id="province_id_field">
 
-                    <input type="text" id="nama_provinsi" class="form-control" name="nama_provinsi">
+                    <input type="hidden" id="nama_provinsi" class="form-control" name="nama_provinsi">
 
-                    <input type="text" id="nama_kota" class="form-control" name="nama_kota">
+                    <input type="hidden" id="nama_kota" class="form-control" name="nama_kota">
 
-                    <input type="text" id="alamat_field" class="form-control" name="alamat_lengkap">
+                    <input type="hidden" id="alamat_field" class="form-control" name="alamat_lengkap">
 
                     <div class="table-responsive">
 
@@ -187,7 +191,7 @@
 
 
 
-                            <p class="text-center"><strong>INFORMASI GAS PRODUK</strong></p>
+                            <p class="text-center"><strong>INFORMASI PRODUK</strong></p>
 
 
 
@@ -211,7 +215,7 @@
 
 
 
-                                        <th scope="col" class="text-center">Berat Bersih/Item</th>
+                                        <!-- <th scope="col" class="text-center">Berat Bersih/Item</th> -->
 
 
 
@@ -247,7 +251,7 @@
 
 
 
-                                            <td class="text-center"><?= $keranjang['berat_bersih'] ?> gram</td>
+                                            <!-- <td class="text-center"><?= $keranjang['berat_bersih'] ?> gram</td> -->
 
 
 
@@ -422,7 +426,9 @@
 
                 $('#no_telp').html(result.no_telp);
 
-                $('#alamat-field').html(result.alamat);
+                $('#alamat').html(result.alamat);
+
+                $('#email').html(result.email);
 
                 $('#kota').html(result.kota);
 
@@ -440,8 +446,7 @@
 
                 $('#email_field').val(result.email);
 
-                var c = result.alamat;
-                alert(c);
+                $('#alamat_field').val(result.alamat);
 
                 $('#city_id_field').val(result.city_id);
 

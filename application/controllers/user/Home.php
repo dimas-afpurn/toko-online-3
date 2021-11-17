@@ -800,7 +800,7 @@ class Home extends CI_Controller
 
 		$data['jumlah'] = $this->toko_online_model->get_jumlah('keranjang_belanja', array('id_keranjang_belanja' => $this->session->userdata('id_kpesan')), 'jumlah_produk', 'berat_total');
 
-		//$data['produk'] =
+		$data['lokasi'] = $this->toko_online_model->get_table('konten');
 
 		$data['total'] = $this->toko_online_model->get_total_tot('keranjang_belanja', array('id_keranjang_belanja' => $this->session->userdata('id_kpesan')), 'jumlah_produk', 'subtotal_belanja', 'berat_total');
 
@@ -1455,6 +1455,8 @@ class Home extends CI_Controller
 
 			'alamat' => $this->input->post('alamat', TRUE),
 
+			'email' => $this->input->post('email', TRUE),
+
 			'city_id' => $this->input->post('kota_order', TRUE),
 
 			'kota' => $this->input->post('nama_kota', TRUE),
@@ -1500,6 +1502,7 @@ class Home extends CI_Controller
 			'nama_lengkap' => $this->input->post('nama_lengkap', TRUE),
 
 			'no_telp' => $this->input->post('no_telp', TRUE),
+			'email' => $this->input->post('email', TRUE),
 
 			'alamat' => $this->input->post('alamat', TRUE),
 
