@@ -310,21 +310,21 @@
             <div class="h4QDlo" role="main" id="status_pesanan" style="display:none;">
                 <div class="kJiu0u">
                     <div class="w3-row">
-                        <a href="javascript:void(0)" onclick="openCity(event, 'London');">
+                        <a href="javascript:void(0)" onclick="openCity(event, 'status1');">
                             <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding w3-border-red" style="width: 24.33333%;">Menunggu Pembayaran</div>
                         </a>
-                        <a href="javascript:void(0)" onclick="openCity(event, 'Paris');">
+                        <a href="javascript:void(0)" onclick="openCity(event, 'status2');">
                             <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding" style="width: 24.33333%;">Sedang Dikemas</div>
                         </a>
-                        <a href="javascript:void(0)" onclick="openCity(event, 'Tokyo');">
+                        <a href="javascript:void(0)" onclick="openCity(event, 'status3');">
                             <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding" style="width: 24.33333%;">Dalam Pengiriman</div>
                         </a>
-                        <a href="javascript:void(0)" onclick="openCity(event, 'Barang');">
+                        <a href="javascript:void(0)" onclick="openCity(event, 'status4');">
                             <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding" style="width: 24.33333%;">Barang Sudah Sampai</div>
                         </a>
                     </div>
 
-                    <div id="London" class="w3-container city" style="display:block">
+                    <div id="status1" class="w3-container city" style="display:block">
                         <div class="_2e9rzB">
                             <svg width="19px" height="19px" viewBox="0 0 19 19">
                                 <g id="Search-New" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -342,7 +342,7 @@
 
                     </div>
 
-                    <div id="Paris" class="w3-container city" style="display:none">
+                    <div id="status2" class="w3-container city" style="display:none">
                         <div class="_2e9rzB">
                             <svg width="19px" height="19px" viewBox="0 0 19 19">
                                 <g id="Search-New" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -359,7 +359,7 @@
                         <span id="status_sedang_dikemas"></span>
                     </div>
 
-                    <div id="Tokyo" class="w3-container city" style="display:none">
+                    <div id="status3" class="w3-container city" style="display:none">
                         <div class="_2e9rzB">
                             <svg width="19px" height="19px" viewBox="0 0 19 19">
                                 <g id="Search-New" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -375,7 +375,7 @@
 
                         <span id="status_dalam_pengiriman"></span>
                     </div>
-                    <div id="Barang" class="w3-container city" style="display:none">
+                    <div id="status4" class="w3-container city" style="display:none">
                         <div class="_2e9rzB">
                             <svg width="19px" height="19px" viewBox="0 0 19 19">
                                 <g id="Search-New" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -803,6 +803,7 @@
 
     function tampil_status_pembayaran_menunggu(kode) {
         var menunggu_pembayaran = '';
+        alert(kode);
         $.getJSON(link_profil + '/load_status_menunggu_pembayaran/' + kode, {
                 format: "json"
             })
@@ -817,50 +818,52 @@
                           
                             </div>
                             <div class="_39XDzv"></div>
-                            <a href="${base_url}user/purchase/order/${val.id_order}" style="text-decoration:none;">
-                                <div class="_2lVoQ1">
-                                    <div class="_1limL3">
-                                        <div>
-                                            <span class="_1BJEKe">
-                                                <div></div>
-                                                <div class="_3huAcN">
-                                                    <div class="_3btL3m">
-                                                        <div class="shopee-image__wrapper">
-                                                            <div class="shopee-image__place-holder">
-                                                                <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon icon-loading-image">
-                                                                    <g>
-                                                                        <rect fill="none" height="8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" width="10" x="1" y="4.5"></rect>
-                                                                        <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="1" x2="11" y1="6.5" y2="6.5"></line>
-                                                                        <rect fill="none" height="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" width="3" x="11" y="6.5"></rect>
-                                                                        <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="1" x2="11" y1="14.5" y2="14.5"></line>
-                                                                        <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="6" x2="6" y1=".5" y2="3"></line>
-                                                                        <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="3.5" x2="3.5" y1="1" y2="3"></line>
-                                                                        <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="8.5" x2="8.5" y1="1" y2="3"></line>
-                                                                    </g>
-                                                                </svg>
+                            <form action="${base_url}user/order/search_order">
+                                <a href="${base_url}user/order/search_order/${val.id_order}" style="text-decoration:none;">
+                                    <div class="_2lVoQ1">
+                                        <div class="_1limL3">
+                                            <div>
+                                                <span class="_1BJEKe">
+                                                    <div></div>
+                                                    <div class="_3huAcN">
+                                                        <div class="_3btL3m">
+                                                            <div class="shopee-image__wrapper">
+                                                                <div class="shopee-image__place-holder">
+                                                                    <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon icon-loading-image">
+                                                                        <g>
+                                                                            <rect fill="none" height="8" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" width="10" x="1" y="4.5"></rect>
+                                                                            <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="1" x2="11" y1="6.5" y2="6.5"></line>
+                                                                            <rect fill="none" height="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" width="3" x="11" y="6.5"></rect>
+                                                                            <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="1" x2="11" y1="14.5" y2="14.5"></line>
+                                                                            <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="6" x2="6" y1=".5" y2="3"></line>
+                                                                            <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="3.5" x2="3.5" y1="1" y2="3"></line>
+                                                                            <line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="8.5" x2="8.5" y1="1" y2="3"></line>
+                                                                        </g>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="shopee-image__content" style="background-image: url('${base_url}assets/img/produk_penjual/${val.foto_produk1}');"><div class="shopee-image__content--blur"></div></div>
                                                             </div>
-                                                            <div class="shopee-image__content" style="background-image: url('${base_url}assets/img/produk_penjual/${val.foto_produk1}');"><div class="shopee-image__content--blur"></div></div>
+                                                        </div>
+                                                        <div class="_1cxKtp">
+                                                            <div>
+                                                                <div class="_1xHDVY"><span class="_30COVM">${val.nama_produk}</span></div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="y8ewrc"></div>
+                                                                <div class="_2H6lAy">x${val.jumlah_produk}</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="_1cxKtp">
-                                                        <div>
-                                                            <div class="_1xHDVY"><span class="_30COVM">${val.nama_produk}</span></div>
-                                                        </div>
-                                                        <div>
-                                                            <div class="y8ewrc"></div>
-                                                            <div class="_2H6lAy">x${val.jumlah_produk}</div>
-                                                        </div>
+                                                    <div class="_1kvNGb">
+                                                        <div><span class="mBERmM">${to_rupiah(val.harga)}</span></div>
                                                     </div>
-                                                </div>
-                                                <div class="_1kvNGb">
-                                                    <div><span class="mBERmM">${to_rupiah(val.harga)}</span></div>
-                                                </div>
-                                            </span>
+                                                </span>
+                                            </div>
+                                            <div class="_3tEHtP"></div>
                                         </div>
-                                        <div class="_3tEHtP"></div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </form>
                             <div class="h_Pf2y"></div>
                         </div>
                     </div>

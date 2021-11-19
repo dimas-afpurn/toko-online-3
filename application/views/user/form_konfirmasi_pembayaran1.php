@@ -1,4 +1,4 @@
-<script type="text/javascript" src="https://app.midtrans.com/snap/snap.js" data-client-key="Mid-client-GKt2bsSTRJeE_zB0"></script>
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-WIXa4ZorDyT_Kxot"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <?php if ($data_order[0]['status_order'] == 5) : ?>
 

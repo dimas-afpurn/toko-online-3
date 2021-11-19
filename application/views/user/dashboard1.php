@@ -141,7 +141,7 @@ function tgl_indo($tanggal)
                                                 </svg>
                                             </div>
                                         </div>
-                                        <div class="navbar__username"><?php echo $this->session->userdata('nama_member') ?></div>
+                                        <div class="navbar__username" style="color: white;"><?php echo $this->session->userdata('nama_member') ?></div>
                                     </div>
                                 </a>
                             </div>

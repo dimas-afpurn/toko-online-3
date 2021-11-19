@@ -724,6 +724,8 @@
 
                 total = parseInt(total) + parseInt(totaltarif);
 
+                alert(total);
+
                 $('#ongkoskirim' + id_penjual).html('');
 
                 $('#ongkoskirim' + id_penjual).html("Rp. " + totaltarif);

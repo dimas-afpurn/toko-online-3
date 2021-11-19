@@ -111,7 +111,7 @@ class Order extends CI_Controller
 			$last_id_order = $data[0]['last'];
 
 			$last_no_urut  	= substr($last_id_order, 7, 3); //memecah string yang ada di id order terakhir untuk membedakan tanggal dengan id yang di buat increment
-			$next_no_urut  	= $last_no_urut + 1;
+			$next_no_urut  	= (int)$last_no_urut + 1;
 			$next_id_order 	= "T" . $today . sprintf('%03s', $next_no_urut); //menentukan huruf 'T' disetiap awal transaksi, di ikuti dengan tanggal sekarang, kemudian nomer id
 			$nama 			= $this->input->post('nama_lengkap');
 			$phone 			= $this->input->post('no_hp');
@@ -424,7 +424,7 @@ class Order extends CI_Controller
 	public function konfirmasi_barang($id)
 	{
 		echo "order terkonfirmasi";
-		$data = $this->toko_online_model->update_table('order', array('status_order' => 5, 'status_bayar' => 1), array('id_order' => $id));
+		$data = $this->toko_online_model->update_table('order', array('status_order' => 4, 'status_bayar' => 1), array('id_order' => $id));
 		$this->toko_online_model->update_table('detail_order', array('pembayaran' => 1), array('id_order' => $id));
 		echo json_encode($data);
 	}

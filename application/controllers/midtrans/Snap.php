@@ -28,7 +28,7 @@ class Snap extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$params = array('server_key' => 'Mid-server-fcKDROWA1ouoJ1xDV4W5P_BW', 'production' => true);
+		$params = array('server_key' => 'SB-Mid-server-kEpnfRm6ZrmRyIjJPlhrNVQE', 'production' => false);
 		$this->load->library('midtrans/midtrans');
 		$this->midtrans->config($params);
 		// $this->load->helper('url');
