@@ -210,7 +210,10 @@ class Home extends CI_Controller
 
 	{
 
+
 		$get_slug_produk = $this->toko_online_model->get_slug_produk($slug_produk);
+		echo $get_slug_produk->id_produk;
+		die;
 
 		$data['title'] = "Situs Jual " . $get_slug_produk->nama_produk . " Terlengkap | blonjosam.com";
 

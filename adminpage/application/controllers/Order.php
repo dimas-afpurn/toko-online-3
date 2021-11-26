@@ -234,7 +234,7 @@ class Order extends CI_Controller
 
 			$cek_status_kirim_all = $this->Cilinaya_model->get_table_where('detail_order', array('id_order' => $get_id_order[0]['id_order'], 'status_kirim' => 0));
 			if ($cek_status_kirim_all == null) {
-				$this->Cilinaya_model->update_table('order', array('status_order' => 4), array('id_order' => $get_id_order[0]['id_order']));
+				$this->Cilinaya_model->update_table('order', array('status_order' => 3), array('id_order' => $get_id_order[0]['id_order']));
 			}
 
 			// $this->toko_online_model->update_table('detail_pengiriman', array('status'), $where);

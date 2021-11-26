@@ -160,7 +160,7 @@ class Snap extends CI_Controller
 		}
 
 		// $simpan = $this->db->insert('transaksi_midtrans', $data);
-		$simpan = $this->Toko_online_model->insert_table('transaksi_midtrans', $data_transaksi);
+		$simpan = $this->db->insert('transaksi_midtrans', $data_transaksi);
 		// $this->db->set($data);
 		// $simpan = $this->db->insert($this->db->dbprefix . 'transaksi_midtrans');
 

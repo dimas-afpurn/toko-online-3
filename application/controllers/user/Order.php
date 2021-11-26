@@ -275,11 +275,9 @@ class Order extends CI_Controller
 					} elseif ($data_order[0]['status_order'] == 2) {
 						$data['status_order'] = "Sedang dikemas";
 					} elseif ($data_order[0]['status_order'] == 3) {
-						$data['status_order'] = "Sedang dikemas";
+						$data['status_order'] = "Dalam Pengiriman";
 					} elseif ($data_order[0]['status_order'] == 4) {
-						$data['status_order'] = "Dalam pengiriman";
-					} elseif ($data_order[0]['status_order'] == 5) {
-						$data['status_order'] = "Barang sudah sampai";
+						$data['status_order'] = "Barang Sudah Sampai";
 					}
 
 					$data['content'] = 'user/form_konfirmasi_pembayaran1';
@@ -314,11 +312,9 @@ class Order extends CI_Controller
 				} elseif ($data_order[0]['status_order'] == 2) {
 					$data['status_order'] = "Sedang dikemas";
 				} elseif ($data_order[0]['status_order'] == 3) {
-					$data['status_order'] = "Sedang dikemas";
+					$data['status_order'] = "Dalam Pengiriman";
 				} elseif ($data_order[0]['status_order'] == 4) {
-					$data['status_order'] = "Dalam pengiriman";
-				} elseif ($data_order[0]['status_order'] == 5) {
-					$data['status_order'] = "Barang sudah sampai";
+					$data['status_order'] = "Barang Sudah Sampai";
 				}
 
 				$data['content'] = 'user/form_konfirmasi_pembayaran1';
@@ -424,7 +420,7 @@ class Order extends CI_Controller
 	public function konfirmasi_barang($id)
 	{
 		echo "order terkonfirmasi";
-		$data = $this->toko_online_model->update_table('order', array('status_order' => 4, 'status_bayar' => 1), array('id_order' => $id));
+		$data = $this->toko_online_model->update_table('order', array('status_order' => 4), array('id_order' => $id));
 		$this->toko_online_model->update_table('detail_order', array('pembayaran' => 1), array('id_order' => $id));
 		echo json_encode($data);
 	}
@@ -612,10 +608,8 @@ class Order extends CI_Controller
 
 		$simpan = $this->toko_online_model->insert_table('review_produk', $data);
 		if ($simpan) {
-			redirect(base_url('/user/home/search_order/'));
+			redirect(base_url('order'));
 			// echo json_encode($data);
-		} else {
-			echo "Gagal";
 		}
 	}
 }

@@ -1,8 +1,8 @@
 <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-WIXa4ZorDyT_Kxot"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<?php if ($data_order[0]['status_order'] == 5) : ?>
+<?php if ($data_order[0]['status_order'] == 4) : ?>
 
-  <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/flatly/bootstrap.min.css">
   <script src="https://use.fontawesome.com/5ac93d4ca8.js"></script>
   <script src="<?= base_url() ?>assets/src/bootstrap4-rating-input.js"></script>
@@ -58,7 +58,7 @@
           </tr>
         <?php endif; ?>
         <tr>
-          <?php if ($data_order[0]['status_order'] == 4) : ?>
+          <?php if ($data_order[0]['status_order'] == 3) : ?>
             <td colspan=2>
               <a id="konfirmasi_barang" type="button" class="btn btn-block btn-success">Barang Sudah Sampai</a>
             </td>
@@ -92,7 +92,7 @@
               <th class="text-center">Harga</th>
               <th class="text-center">Jumlah</th>
               <th class="text-center">Subtotal</th>
-              <?php if ($data_order[0]['status_order'] == 5) : ?>
+              <?php if ($data_order[0]['status_order'] == 4) : ?>
                 <th class="text-center">Opsi</th>
               <?php endif; ?>
             </tr>
@@ -109,7 +109,7 @@
                   <td class="text-right">Rp <?= number_format($produk['harga'], 0, ',', '.') ?>,00</td>
                   <td class="text-center"><?= $produk['jumlah_produk'] ?> item</td>
                   <th class="text-right">Rp <?= number_format($produk['harga'] * $produk['jumlah_produk'], 0, ',', '.') ?>,00</th>
-                  <?php if ($data_order[0]['status_order'] == 5) : ?>
+                  <?php if ($data_order[0]['status_order'] == 4) : ?>
                     <?php if ($produk['status_detail_komplain'] == 1) : ?>
                       <td class="text-center">
                         <a href="<?= base_url("user/order/komplain_barang/" . $produk['id_detail_order']) ?>" class="btn btn-secondary">Detail Komplain Barang</a>
@@ -126,7 +126,7 @@
             <tr>
               <th colspan="3" class="text-right" scope="col">Ongkir</th>
               <th class="text-right">Rp <?= number_format($data_order[0]['ongkir'], 0, ',', '.') ?>,00</th>
-              <?php if ($data_order[0]['status_order'] == 5) : ?>
+              <?php if ($data_order[0]['status_order'] == 4) : ?>
                 <th class="text-center"></th>
               <?php endif; ?>
             </tr>
@@ -134,7 +134,7 @@
               <th colspan="3" class="text-right">Total</th>
               <!-- <td><?= number_format($data_order[0]['jumlah_order'], 0, ',', '.') ?></td> -->
               <th class="text-right">Rp <?= number_format($data_order[0]['total_order'], 0, ',', '.') ?>,00</th>
-              <?php if ($data_order[0]['status_order'] == 5) : ?>
+              <?php if ($data_order[0]['status_order'] == 4) : ?>
                 <th class="text-center"></th>
               <?php endif; ?>
             </tr>
@@ -199,7 +199,7 @@
           </table>
         </div>
       <?php endif; ?>
-      <?php if ($data_order[0]['status_order'] == 5) : ?>
+      <?php if ($data_order[0]['status_order'] == 4) : ?>
         <div class="col-md-12 text-center">
           <ol class="breadcrumb"></ol>
           <h2>Penilaian Produk</h2><br>
